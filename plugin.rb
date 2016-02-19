@@ -22,6 +22,17 @@ module ::AddSellers
 end
 
 after_initialize do
+
+  public_user_custom_fields_setting = SiteSetting.public_user_custom_fields
+  if public_user_custom_fields_setting.empty?
+    SiteSetting.set("public_user_custom_fields", 'shop_url|shop_name')
+  elsif public_user_custom_fields_setting !~ /shop_url/
+    SiteSetting.set(
+      "public_user_custom_fields",
+      [SiteSetting.public_user_custom_fields, 'shop_url', 'shop_name'].join("|")
+    )
+  end
+
   module ::AddSellers
     class AddSellersJob < ::Jobs::Scheduled
       every 1.day
