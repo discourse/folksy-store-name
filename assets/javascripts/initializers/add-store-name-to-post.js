@@ -22,6 +22,6 @@ function addStoreName(api) {
 export default {
   name: "add-store-name-to-post",
   initialize() {
-    withPluginApi("0.1", addStoreName);
+    withPluginApi(addStoreName);
   },
 };
